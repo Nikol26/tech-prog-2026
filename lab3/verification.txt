@@ -1,0 +1,22 @@
+test_bad_transactions_preserve_state (test_game.GameTests.test_bad_transactions_preserve_state) ... ok
+test_bonus_loot_and_armor_limit (test_game.GameTests.test_bonus_loot_and_armor_limit) ... ok
+test_builder_defaults_and_independent_heroes (test_game.GameTests.test_builder_defaults_and_independent_heroes) ... ok
+test_builder_validation (test_game.GameTests.test_builder_validation) ... ok
+test_buy_equip_sell (test_game.GameTests.test_buy_equip_sell) ... ok
+test_campaign_all_classes_from_level_one (test_game.GameTests.test_campaign_all_classes_from_level_one) ... ok
+test_catalog_does_not_share_registered_item (test_game.GameTests.test_catalog_does_not_share_registered_item) ... ok
+test_cli_route_invalid_seed_combat_and_shop (test_game.GameTests.test_cli_route_invalid_seed_combat_and_shop) ... ok
+test_defeat_and_rest (test_game.GameTests.test_defeat_and_rest) ... ok
+test_expedition_replay_same_starting_state (test_game.GameTests.test_expedition_replay_same_starting_state) ... ok
+test_factory_method_enemy_types (test_game.GameTests.test_factory_method_enemy_types) ... ok
+test_four_abstract_factory_families (test_game.GameTests.test_four_abstract_factory_families) ... ok
+test_invalid_item_and_enchantment (test_game.GameTests.test_invalid_item_and_enchantment) ... ok
+test_level_progression (test_game.GameTests.test_level_progression) ... ok
+test_menu_invalid_selection (test_game.GameTests.test_menu_invalid_selection) ... ok
+test_prototype_independence (test_game.GameTests.test_prototype_independence) ... ok
+test_singleton_and_seed (test_game.GameTests.test_singleton_and_seed) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.009s
+
+OK
