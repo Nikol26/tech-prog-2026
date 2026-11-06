@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Lab 4 - Demo" type="PythonConfigurationType" factoryName="Python">
-    <module name="lab3" />
+    <module name="lab4" />
     <envs><env name="PYTHONIOENCODING" value="utf-8" /></envs>
     <option name="PARENT_ENVS" value="true" />
     <option name="SDK_HOME" value="" />

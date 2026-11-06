@@ -1,54 +1,39 @@
-"""Мир игры: Factory Method, Decorator и Adapter."""
+"""Бой, Factory Method локаций, экспедиции и торговец."""
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from core import Combatant, Dice, Hit
-from combat import Damage, ArmorHandler, BarrierHandler, BalancedTactic
 
 
 class Enemy:
-    code = "enemy"
-
-    def __init__(self, name, health, low, high, experience, gold, defense=0, barrier=0):
+    def __init__(self, name, health, low, high, experience, gold, defense=0):
         self.name, self.health, self.max_health = name, health, health
         self.low, self.high = low, high
-        self.experience, self.gold = experience, gold
-        self._defense = ArmorHandler(defense)
-        if barrier:
-            self._defense.set_next(BarrierHandler(barrier))
+        self.experience, self.gold, self.defense = experience, gold, defense
 
     def roll_damage(self):
         return Hit(Dice().roll(self.low, self.high))
 
-    def roll_gold_reward(self):
-        return Dice().roll(self.gold // 2, self.gold)
-
-    def receive_hit(self, amount):
-        damage = Damage(amount)
-        self._defense.handle(damage)
-        damage.amount = min(self.health, damage.amount)
-        self.health -= damage.amount
-        return damage
+    def receive_hit(self, damage):
+        if damage < 0:
+            raise ValueError("Урон не может быть отрицательным")
+        dealt = min(self.health, max(1, round(damage * (1 - self.defense))))
+        self.health -= dealt
+        return dealt
 
 
 class Goblin(Enemy):
-    code = "goblin"
-
     def __init__(self):
         super().__init__("Гоблин", 50, 6, 14, 40, 30)
 
 
 class Skeleton(Enemy):
-    code = "skeleton"
-
     def __init__(self):
-        super().__init__("Скелет", 110, 10, 24, 90, 70, defense=0.3)
+        super().__init__("Скелет", 110, 10, 24, 90, 70, 0.3)
 
 
 class Dragon(Enemy):
-    code = "dragon"
-
     def __init__(self):
-        super().__init__("Дракон", 260, 16, 22, 500, 400, defense=0.25, barrier=40)
+        super().__init__("Дракон", 260, 16, 22, 500, 400, 0.25)
 
     def roll_damage(self):
         hit = super().roll_damage()
@@ -57,93 +42,13 @@ class Dragon(Enemy):
 
 
 class SwampGuardian(Enemy):
-    code = "swamp-guardian"
-
     def __init__(self):
-        super().__init__("Болотный страж", 85, 10, 19, 65, 45, barrier=15)
+        super().__init__("Болотный страж", 85, 10, 19, 65, 45)
 
-
-class EnemyDecorator(Enemy):
-    """Общий интерфейс врага сохранён; обёртки можно вкладывать."""
-    prefix = ""
-
-    def __init__(self, enemy):
-        self.enemy = enemy
-
-    @property
-    def code(self):
-        return self.enemy.code
-
-    @property
-    def name(self):
-        return self.prefix + self.enemy.name
-
-    @property
-    def experience(self):
-        return self.enemy.experience
-
-    def __getattr__(self, name):
-        return getattr(self.enemy, name)
-
-    def roll_damage(self):
-        return self.enemy.roll_damage()
-
-    def roll_gold_reward(self):
-        return self.enemy.roll_gold_reward()
-
-    def receive_hit(self, amount):
-        return self.enemy.receive_hit(amount)
-
-
-class LegendaryEnemy(EnemyDecorator):
-    prefix = "Легендарный "
-
-    def roll_damage(self):
-        hit = self.enemy.roll_damage()
-        return Hit(hit.damage * 2, hit.critical)
-
-    @property
-    def experience(self):
-        return self.enemy.experience * 2
-
-    def roll_gold_reward(self):
-        return self.enemy.roll_gold_reward() * 2
-
-
-class WindfuryEnemy(EnemyDecorator):
-    prefix = "Неистовый "
-
-    def roll_damage(self):
-        first, second = self.enemy.roll_damage(), self.enemy.roll_damage()
-        return Hit(first.damage + second.damage, first.critical or second.critical)
-
-    @property
-    def experience(self):
-        return self.enemy.experience * 3 // 2
-
-    def roll_gold_reward(self):
-        return self.enemy.roll_gold_reward() * 3 // 2
-
-
-class ArmoredEnemy(EnemyDecorator):
-    prefix = "Бронированный "
-
-    def receive_hit(self, amount):
-        Damage(amount)  # Проверяем исходный урон до преобразования.
-        return self.enemy.receive_hit(amount - amount // 2)
-
-
-class HauntedWeapon(Enemy):
-    """Adapter: превращает предмет Weapon в противника Enemy."""
-    code = "haunted-weapon"
-
-    def __init__(self, weapon):
-        self.weapon = weapon
-        super().__init__("Одержимый " + weapon.name, weapon.damage * 5,
-                         0, 0, weapon.price // 2, weapon.price // 2)
-
-    def roll_damage(self):
-        return self.weapon.roll_damage()
+    def receive_hit(self, damage):
+        if damage < 0:
+            raise ValueError("Урон не может быть отрицательным")
+        return super().receive_hit(max(1, damage - 2))
 
 
 @dataclass(frozen=True)
@@ -154,24 +59,17 @@ class BattleEvent:
     damage: int
     health_after: int
     critical: bool
-    evaded: bool = False
-    absorbed: int = 0
-    action: str = "ATTACK"
 
 
-def battle(hero: Combatant, enemy: Combatant, tactic=None):
-    tactic = tactic if tactic is not None else BalancedTactic()
+def battle(hero: Combatant, enemy: Combatant):
     events, round_number = [], 0
     while hero.health > 0 and enemy.health > 0:
         round_number += 1
-        action = tactic.choose_action(round_number, hero, enemy)
-        for attacker, defender, multiplier in ((hero, enemy, action.attack),
-                                               (enemy, hero, action.incoming)):
+        for attacker, defender in ((hero, enemy), (enemy, hero)):
             hit = attacker.roll_damage()
-            damage = defender.receive_hit(max(1, int(hit.damage * multiplier + 0.5)))
+            damage = defender.receive_hit(hit.damage)
             events.append(BattleEvent(round_number, attacker.name, defender.name,
-                                      damage.amount, defender.health, hit.critical,
-                                      damage.evaded, damage.absorbed, action.name))
+                                      damage, defender.health, hit.critical))
             if defender.health == 0:
                 break
     return hero.health > 0, tuple(events)
@@ -187,9 +85,6 @@ class Expedition:
     gold: int = 0
     loot: object = None
     levels: int = 0
-    location_code: str = ""
-    tactic_code: str = "balanced"
-    enemy_code: str = ""
 
 
 class Location(ABC):
@@ -200,34 +95,18 @@ class Location(ABC):
     def create_enemy(self) -> Enemy:
         """Factory Method: тип врага определяет подкласс."""
 
-    def _make_elite(self, enemy, dice):
-        both = dice.chance(0.25)
-        if dice.chance(0.5):
-            enemy = LegendaryEnemy(enemy)
-            if both:
-                enemy = WindfuryEnemy(enemy)
-        else:
-            enemy = WindfuryEnemy(enemy)
-            if both:
-                enemy = LegendaryEnemy(enemy)
-        return ArmoredEnemy(enemy) if dice.chance(0.3) else enemy
-
-    def explore(self, hero, seed=None, tactic=None):
+    def explore(self, hero, seed=None):
         dice = Dice()
         seed = dice.roll(0, 999999) if seed is None else seed
         dice.reseed(seed)
-        tactic = tactic if tactic is not None else BalancedTactic()
-        hero.rest()
+        hero.restore_health()
         enemy = self.create_enemy()
-        if dice.chance(0.2):
-            enemy = self._make_elite(enemy, dice)
-        victory, events = battle(hero, enemy, tactic)
-        context = dict(location_code=self.code, tactic_code=tactic.code, enemy_code=enemy.code)
+        victory, events = battle(hero, enemy)
         if not victory:
             lost = hero.gold // 2
             hero.spend_gold(lost)
-            return Expedition(seed, enemy.name, False, events, gold=-lost, **context)
-        gold = enemy.roll_gold_reward()
+            return Expedition(seed, enemy.name, False, events, gold=-lost)
+        gold = dice.roll(enemy.gold // 2, enemy.gold)
         loot = self.catalog.create(dice.pick(self.loot)) if dice.chance(0.6) else None
         if loot is not None:
             if dice.chance(0.3):
@@ -235,48 +114,38 @@ class Location(ABC):
             hero.inventory.append(loot)
         levels = hero.gain_experience(enemy.experience)
         hero.gold += gold
-        return Expedition(seed, enemy.name, True, events, enemy.experience, gold,
-                          loot, levels, **context)
+        return Expedition(seed, enemy.name, True, events, enemy.experience, gold, loot, levels)
 
 
 class Forest(Location):
-    code, name, level, loot = "forest", "Мистический лес", 1, ("iron", "bow", "leather")
+    name, level, loot = "Мистический лес", 1, ("iron", "bow", "leather")
 
     def create_enemy(self):
         return Goblin()
 
 
 class Crypt(Location):
-    code, name, level = "crypt", "Заброшенный склеп", 3
-    loot = ("knight", "bone", "necro", "crypt")
+    name, level, loot = "Заброшенный склеп", 3, ("knight", "bone", "necro", "crypt")
 
     def create_enemy(self):
         return Skeleton()
 
 
 class DragonLair(Location):
-    code, name, level, loot = "dragon-lair", "Логово дракона", 5, ("dawn", "dragon")
+    name, level, loot = "Логово дракона", 5, ("dawn", "dragon")
 
     def create_enemy(self):
         return Dragon()
 
 
 class Swamp(Location):
-    code, name, level, loot = "swamp", "Туманное болото", 2, ("guardian", "swamp")
+    name, level, loot = "Туманное болото", 2, ("guardian", "swamp")
 
     def create_enemy(self):
         return SwampGuardian()
 
 
-class HauntedManor(Location):
-    code, name, level = "manor", "Проклятый особняк", 2
-    loot = ("iron", "elven", "ember")
-
-    def create_enemy(self):
-        return HauntedWeapon(self.catalog.create(Dice().pick(self.loot)))
-
-
-LOCATIONS = (Forest, Swamp, HauntedManor, Crypt, DragonLair)
+LOCATIONS = (Forest, Swamp, Crypt, DragonLair)
 
 
 class Merchant:

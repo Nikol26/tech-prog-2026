@@ -15,27 +15,8 @@ test_level_progression (test_game.GameTests.test_level_progression) ... ok
 test_menu_invalid_selection (test_game.GameTests.test_menu_invalid_selection) ... ok
 test_prototype_independence (test_game.GameTests.test_prototype_independence) ... ok
 test_singleton_and_seed (test_game.GameTests.test_singleton_and_seed) ... ok
-test_adapter_delegates_weapon_attack (test_game.Lab4Tests.test_adapter_delegates_weapon_attack) ... ok
-test_bad_facade_codes_do_not_mutate_hero (test_game.Lab4Tests.test_bad_facade_codes_do_not_mutate_hero) ... ok
-test_campaign_through_facade_survives_restarts (test_game.Lab4Tests.test_campaign_through_facade_survives_restarts) ... ok
-test_chain_order_and_depleting_barrier (test_game.Lab4Tests.test_chain_order_and_depleting_barrier) ... ok
-test_cli_reloads_same_hero (test_game.Lab4Tests.test_cli_reloads_same_hero) ... ok
-test_corrupted_file_is_not_overwritten (test_game.Lab4Tests.test_corrupted_file_is_not_overwritten) ... ok
-test_enemy_chain_and_composed_decorators (test_game.Lab4Tests.test_enemy_chain_and_composed_decorators) ... ok
-test_evasion_stops_chain_and_preserves_barrier (test_game.Lab4Tests.test_evasion_stops_chain_and_preserves_barrier) ... ok
-test_facade_saves_and_restores_victory_and_defeat (test_game.Lab4Tests.test_facade_saves_and_restores_victory_and_defeat) ... ok
-test_facade_trading_and_equipment_persist (test_game.Lab4Tests.test_facade_trading_and_equipment_persist) ... ok
-test_failed_atomic_write_preserves_original (test_game.Lab4Tests.test_failed_atomic_write_preserves_original) ... ok
-test_hero_rest_resets_barrier (test_game.Lab4Tests.test_hero_rest_resets_barrier) ... ok
-test_observer_achievements_and_journal (test_game.Lab4Tests.test_observer_achievements_and_journal) ... ok
-test_proxy_identity_and_read_count (test_game.Lab4Tests.test_proxy_identity_and_read_count) ... ok
-test_random_elites_and_seed_replay (test_game.Lab4Tests.test_random_elites_and_seed_replay) ... ok
-test_repository_roundtrip_full_state_and_multiple_heroes (test_game.Lab4Tests.test_repository_roundtrip_full_state_and_multiple_heroes) ... ok
-test_strategies_produce_different_battles (test_game.Lab4Tests.test_strategies_produce_different_battles) ... ok
-test_strategy_conditions (test_game.Lab4Tests.test_strategy_conditions) ... ok
-test_zero_and_negative_damage (test_game.Lab4Tests.test_zero_and_negative_damage) ... ok
 
 ----------------------------------------------------------------------
-Ran 36 tests in 1.258s
+Ran 17 tests in 0.009s
 
 OK

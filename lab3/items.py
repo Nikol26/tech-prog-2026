@@ -16,7 +16,6 @@ class Enchantment:
 FIERY = Enchantment("Огненное", damage=6, price=50)
 SHARP = Enchantment("Острое", damage=3)
 STURDY = Enchantment("Прочное", defense=5)
-ENCHANTMENTS = {"fiery": FIERY, "sharp": SHARP, "sturdy": STURDY}
 
 
 @dataclass(eq=False)

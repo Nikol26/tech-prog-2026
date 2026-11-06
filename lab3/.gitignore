@@ -2,7 +2,3 @@
 __pycache__/
 *.py[cod]
 .venv/
-heroes.json
-heroes.json.*.tmp
-demo-*/
-test-*/

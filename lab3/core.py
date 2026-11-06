@@ -1,10 +1,7 @@
 """Общий источник случайности и контракт участника боя."""
 from dataclasses import dataclass
 import random
-from typing import Protocol, TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from combat import Damage
+from typing import Protocol
 
 
 class Dice:
@@ -41,4 +38,4 @@ class Combatant(Protocol):
     health: int
 
     def roll_damage(self) -> Hit: ...
-    def receive_hit(self, damage: int) -> "Damage": ...
+    def receive_hit(self, damage: int) -> int: ...

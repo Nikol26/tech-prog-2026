@@ -1,0 +1,41 @@
+test_bad_transactions_preserve_state (test_game.GameTests.test_bad_transactions_preserve_state) ... ok
+test_bonus_loot_and_armor_limit (test_game.GameTests.test_bonus_loot_and_armor_limit) ... ok
+test_builder_defaults_and_independent_heroes (test_game.GameTests.test_builder_defaults_and_independent_heroes) ... ok
+test_builder_validation (test_game.GameTests.test_builder_validation) ... ok
+test_buy_equip_sell (test_game.GameTests.test_buy_equip_sell) ... ok
+test_campaign_all_classes_from_level_one (test_game.GameTests.test_campaign_all_classes_from_level_one) ... ok
+test_catalog_does_not_share_registered_item (test_game.GameTests.test_catalog_does_not_share_registered_item) ... ok
+test_cli_route_invalid_seed_combat_and_shop (test_game.GameTests.test_cli_route_invalid_seed_combat_and_shop) ... ok
+test_defeat_and_rest (test_game.GameTests.test_defeat_and_rest) ... ok
+test_expedition_replay_same_starting_state (test_game.GameTests.test_expedition_replay_same_starting_state) ... ok
+test_factory_method_enemy_types (test_game.GameTests.test_factory_method_enemy_types) ... ok
+test_four_abstract_factory_families (test_game.GameTests.test_four_abstract_factory_families) ... ok
+test_invalid_item_and_enchantment (test_game.GameTests.test_invalid_item_and_enchantment) ... ok
+test_level_progression (test_game.GameTests.test_level_progression) ... ok
+test_menu_invalid_selection (test_game.GameTests.test_menu_invalid_selection) ... ok
+test_prototype_independence (test_game.GameTests.test_prototype_independence) ... ok
+test_singleton_and_seed (test_game.GameTests.test_singleton_and_seed) ... ok
+test_adapter_delegates_weapon_attack (test_game.Lab4Tests.test_adapter_delegates_weapon_attack) ... ok
+test_bad_facade_codes_do_not_mutate_hero (test_game.Lab4Tests.test_bad_facade_codes_do_not_mutate_hero) ... ok
+test_campaign_through_facade_survives_restarts (test_game.Lab4Tests.test_campaign_through_facade_survives_restarts) ... ok
+test_chain_order_and_depleting_barrier (test_game.Lab4Tests.test_chain_order_and_depleting_barrier) ... ok
+test_cli_reloads_same_hero (test_game.Lab4Tests.test_cli_reloads_same_hero) ... ok
+test_corrupted_file_is_not_overwritten (test_game.Lab4Tests.test_corrupted_file_is_not_overwritten) ... ok
+test_enemy_chain_and_composed_decorators (test_game.Lab4Tests.test_enemy_chain_and_composed_decorators) ... ok
+test_evasion_stops_chain_and_preserves_barrier (test_game.Lab4Tests.test_evasion_stops_chain_and_preserves_barrier) ... ok
+test_facade_saves_and_restores_victory_and_defeat (test_game.Lab4Tests.test_facade_saves_and_restores_victory_and_defeat) ... ok
+test_facade_trading_and_equipment_persist (test_game.Lab4Tests.test_facade_trading_and_equipment_persist) ... ok
+test_failed_atomic_write_preserves_original (test_game.Lab4Tests.test_failed_atomic_write_preserves_original) ... ok
+test_hero_rest_resets_barrier (test_game.Lab4Tests.test_hero_rest_resets_barrier) ... ok
+test_observer_achievements_and_journal (test_game.Lab4Tests.test_observer_achievements_and_journal) ... ok
+test_proxy_identity_and_read_count (test_game.Lab4Tests.test_proxy_identity_and_read_count) ... ok
+test_random_elites_and_seed_replay (test_game.Lab4Tests.test_random_elites_and_seed_replay) ... ok
+test_repository_roundtrip_full_state_and_multiple_heroes (test_game.Lab4Tests.test_repository_roundtrip_full_state_and_multiple_heroes) ... ok
+test_strategies_produce_different_battles (test_game.Lab4Tests.test_strategies_produce_different_battles) ... ok
+test_strategy_conditions (test_game.Lab4Tests.test_strategy_conditions) ... ok
+test_zero_and_negative_damage (test_game.Lab4Tests.test_zero_and_negative_damage) ... ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 1.258s
+
+OK
