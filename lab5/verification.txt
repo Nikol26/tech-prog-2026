@@ -1,0 +1,21 @@
+Лабораторная №5 — результат локальной проверки
+Дата: 2026-11-22
+Python 3.14.5; pytest 9.2.0; Windows
+Команда: python lab5/run_tests.py -q --color=no
+70 новых проверок, 36 прежних; 9 новых тестовых классов.
+
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0
+rootdir: C:\Users\Nicole\tech-prog-2026
+configfile: pytest.ini
+testpaths: lab5/tests, lab4/test_game.py
+collected 106 items
+
+lab5\tests\test_cli_e2e.py ..                                            [  1%]
+lab5\tests\test_creation.py ..................                           [ 18%]
+lab5\tests\test_defense.py ........................                      [ 41%]
+lab5\tests\test_storage_integration.py .............                     [ 53%]
+lab5\tests\test_structural.py .............                              [ 66%]
+lab4\test_game.py ....................................                   [100%]
+
+============================= 106 passed in 1.28s =============================
